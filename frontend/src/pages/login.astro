@@ -1,0 +1,16 @@
+---
+import AuthCard from "../components/AuthCard.astro";
+import MessageBox from "../components/MessageBox.astro";
+import PageShell from "../components/PageShell.astro";
+---
+
+<PageShell
+	title="Login"
+	subtitle="Use your account token to access the protected FastAPI routes."
+>
+	<MessageBox />
+	<AuthCard mode="login" />
+	<script>
+		import "../scripts/login.js";
+	</script>
+</PageShell>

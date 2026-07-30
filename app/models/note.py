@@ -31,3 +31,8 @@ class Note(Base):
     category: Mapped["Category"] = relationship(
         back_populates="notes"
     )
+
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"),
+        index=True,
+    )

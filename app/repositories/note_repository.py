@@ -5,8 +5,8 @@ from app.models import Note
 from app.schemas import NoteCreate
 
 
-def create_note(db: Session, note_data: NoteCreate) -> Note:
-    note = Note(**note_data.model_dump())
+def create_note(db: Session, note_data: NoteCreate, user_id: int) -> Note:
+    note = Note(**note_data.model_dump(), user_id=user_id)
 
     db.add(note)
     db.commit()
@@ -17,10 +17,11 @@ def create_note(db: Session, note_data: NoteCreate) -> Note:
 
 def list_notes(
     db: Session,
+    user_id: int,
     category_id: int | None = None,
     pattern: str | None = None,
 ) -> list[Note]:
-    statement = select(Note)
+    statement = select(Note).where(Note.user_id == user_id)
 
     if category_id is not None:
         statement = statement.where(Note.category_id == category_id)
@@ -33,8 +34,22 @@ def list_notes(
     return list(db.scalars(statement).all())
 
 
-def get_note_by_id(db: Session, note_id: int) -> Note | None:
-    return db.get(Note, note_id)
+def get_note_by_id(db: Session, note_id: int, user_id: int) -> Note | None:
+    statement = select(Note).where(
+        Note.id == note_id,
+        Note.user_id == user_id,
+    )
+
+    return db.scalar(statement)
+
+
+def get_note_by_question(db: Session, question: str, user_id: int) -> list[Note]:
+    statement = select(Note).where(
+        Note.user_id == user_id,
+        Note.question.ilike(f"%{question}%"),
+    )
+
+    return list(db.scalars(statement).all())
 
 
 def update_note(
