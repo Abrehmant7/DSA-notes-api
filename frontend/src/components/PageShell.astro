@@ -1,0 +1,39 @@
+---
+import "../styles/global.css";
+
+const {
+	title = "DSA Notes",
+	subtitle = "Save and review DSA patterns.",
+	wide = false,
+} = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="min-h-screen bg-yellow-50 text-zinc-950">
+		<main class:list={["mx-auto min-h-screen px-4 py-6 sm:px-6", wide ? "max-w-7xl" : "max-w-md"]}>
+			<header class="mb-6 flex items-center justify-between gap-4">
+				<a href="/home" class="text-lg font-black tracking-normal text-zinc-950">DSA Notes</a>
+				<nav class="flex items-center gap-2 text-sm font-semibold">
+					<a href="/login" class="rounded-md px-3 py-2 text-zinc-700 hover:bg-yellow-100">Login</a>
+					<a href="/register" class="rounded-md bg-zinc-950 px-3 py-2 text-yellow-50 hover:bg-zinc-800">Register</a>
+				</nav>
+			</header>
+
+			<section class="mb-6">
+				<p class="text-xs font-black uppercase tracking-wide text-yellow-700">FastAPI + Astro</p>
+				<h1 class="mt-2 text-3xl font-black tracking-normal text-zinc-950">{title}</h1>
+				<p class="mt-2 text-sm leading-6 text-zinc-700">{subtitle}</p>
+			</section>
+
+			<slot />
+		</main>
+	</body>
+</html>

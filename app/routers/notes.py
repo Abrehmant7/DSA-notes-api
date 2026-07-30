@@ -18,9 +18,13 @@ router = APIRouter(
 def create_note(
     note_data: NoteCreate,
     db: DatabaseSession,
-    _current_user: CurrentUser,
+    current_user: CurrentUser,
 ):
-    return note_service.create_note(db, note_data)
+    return note_service.create_note(
+        db=db,
+        note_data=note_data,
+        user_id=current_user.id,
+    )
 
 
 @router.get(
@@ -29,7 +33,7 @@ def create_note(
 )
 def list_notes(
     db: DatabaseSession,
-    _current_user: CurrentUser,
+    current_user: CurrentUser,
     category_id: int | None = None,
     pattern: str | None = None,
 ):
@@ -37,6 +41,23 @@ def list_notes(
         db=db,
         category_id=category_id,
         pattern=pattern,
+        user_id=current_user.id,
+    )
+
+
+@router.get(
+    "/search",
+    response_model=list[NoteRead],
+)
+def search_notes(
+    question: str,
+    db: DatabaseSession,
+    current_user: CurrentUser,
+):
+    return note_service.search_notes(
+        db=db,
+        question=question,
+        user_id=current_user.id,
     )
 
 
@@ -47,9 +68,13 @@ def list_notes(
 def retrieve_note(
     note_id: int,
     db: DatabaseSession,
-    _current_user: CurrentUser,
+    current_user: CurrentUser,
 ):
-    return note_service.retrieve_note(db, note_id)
+    return note_service.retrieve_note(
+        db=db,
+        note_id=note_id,
+        user_id=current_user.id,
+    )
 
 
 @router.put(
@@ -60,12 +85,13 @@ def update_note(
     note_id: int,
     note_data: NoteCreate,
     db: DatabaseSession,
-    _current_user: CurrentUser,
+    current_user: CurrentUser,
 ):
     return note_service.update_note(
         db=db,
         note_id=note_id,
         note_data=note_data,
+        user_id=current_user.id,
     )
 
 
@@ -76,8 +102,12 @@ def update_note(
 def delete_note(
     note_id: int,
     db: DatabaseSession,
-    _current_user: CurrentUser,
+    current_user: CurrentUser,
 ):
-    note_service.delete_note(db, note_id)
+    note_service.delete_note(
+        db=db,
+        note_id=note_id,
+        user_id=current_user.id,
+    )
 
     return None

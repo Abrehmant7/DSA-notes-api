@@ -1,0 +1,29 @@
+---
+import CategoryManager from "../components/CategoryManager.astro";
+import HomeHeader from "../components/HomeHeader.astro";
+import MessageBox from "../components/MessageBox.astro";
+import NoteEditor from "../components/NoteEditor.astro";
+import NotesList from "../components/NotesList.astro";
+import PageShell from "../components/PageShell.astro";
+---
+
+<PageShell
+	title="Home"
+	subtitle="Create categories, save notes, and search your DSA patterns."
+	wide
+>
+	<HomeHeader />
+	<MessageBox />
+	<div class="grid gap-6 lg:grid-cols-[360px_1fr]">
+		<div class="grid content-start gap-6">
+			<CategoryManager />
+		</div>
+		<div class="grid content-start gap-6">
+			<NoteEditor />
+			<NotesList />
+		</div>
+	</div>
+	<script>
+		import "../scripts/home.js";
+	</script>
+</PageShell>

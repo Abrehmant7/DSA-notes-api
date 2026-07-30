@@ -18,9 +18,13 @@ router = APIRouter(
 def create_category(
     category_data: CategoryCreate,
     db: DatabaseSession,
-    _current_user: CurrentUser,
+    current_user: CurrentUser,
 ):
-    return category_service.create_category(db, category_data)
+    return category_service.create_category(
+        db=db,
+        category_data=category_data,
+        user_id=current_user.id,
+    )
 
 
 @router.get(
@@ -29,6 +33,6 @@ def create_category(
 )
 def list_categories(
     db: DatabaseSession,
-    _current_user: CurrentUser,
+    current_user: CurrentUser,
 ):
-    return category_service.list_categories(db)
+    return category_service.list_categories(db, current_user.id)

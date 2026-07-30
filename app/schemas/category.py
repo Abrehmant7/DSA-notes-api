@@ -11,5 +11,6 @@ class CategoryCreate(BaseModel):
 class CategoryRead(BaseModel):
     id: int
     name: str
+    user_id: int
 
     model_config = ConfigDict(from_attributes=True)

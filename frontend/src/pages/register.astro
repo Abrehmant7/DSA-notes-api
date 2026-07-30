@@ -1,0 +1,16 @@
+---
+import AuthCard from "../components/AuthCard.astro";
+import MessageBox from "../components/MessageBox.astro";
+import PageShell from "../components/PageShell.astro";
+---
+
+<PageShell
+	title="Create Your Account"
+	subtitle="Register once, then use the same account to manage your own categories and notes."
+>
+	<MessageBox />
+	<AuthCard mode="register" />
+	<script>
+		import "../scripts/register.js";
+	</script>
+</PageShell>

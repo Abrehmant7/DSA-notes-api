@@ -9,10 +9,12 @@ from app.schemas import CategoryCreate
 def create_category(
     db: Session,
     category_data: CategoryCreate,
+    user_id: int,
 ) -> Category:
     existing_category = category_repository.get_category_by_name(
         db,
         category_data.name,
+        user_id
     )
 
     if existing_category:
@@ -24,8 +26,9 @@ def create_category(
     return category_repository.create_category(
         db,
         category_data.name,
+        user_id
     )
 
 
-def list_categories(db: Session) -> list[Category]:
-    return category_repository.list_categories(db)
+def list_categories(db: Session, user_id: int) -> list[Category]:
+    return category_repository.list_categories(db, user_id)
